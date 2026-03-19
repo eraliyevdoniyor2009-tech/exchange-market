@@ -43,7 +43,7 @@
 
   /* Focus styles */
   :focus-visible {
-    @apply outline-none ring-2 ring-ring ring-offset-2;
+    @apply outline-none ring-2 ring ring-offset-2;
   }
 }
 
