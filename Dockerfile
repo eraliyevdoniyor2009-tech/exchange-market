@@ -9,7 +9,7 @@ WORKDIR /app
 COPY package*.json ./
 COPY prisma ./prisma/
 
-RUN npm ci --only=production
+RUN npm install
 RUN npx prisma generate
 
 # ── Stage 2: Builder ──────────────────────────────────────
