@@ -1,0 +1,132 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ─────────────────────────────────────────
+// Enums
+// ─────────────────────────────────────────
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ProductStatus {
+  ACTIVE
+  INACTIVE
+  SOLD
+  PENDING
+}
+
+enum ReportStatus {
+  PENDING
+  REVIEWED
+  RESOLVED
+  DISMISSED
+}
+
+enum ReportReason {
+  SPAM
+  FRAUD
+  INAPPROPRIATE
+  WRONG_CATEGORY
+  DUPLICATE
+  OTHER
+}
+
+// ─────────────────────────────────────────
+// Models
+// ─────────────────────────────────────────
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  password      String?
+  phone         String?
+  telegram      String?
+  avatar        String?
+  role          Role      @default(USER)
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  // Relations
+  products      Product[]
+  reports       Report[]   @relation("ReporterRelation")
+
+  @@index([email])
+  @@map("users")
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  nameEn      String
+  nameUz      String
+  nameRu      String
+  slug        String    @unique
+  icon        String?
+  isActive    Boolean   @default(true)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations
+  products    Product[]
+
+  @@index([slug])
+  @@map("categories")
+}
+
+model Product {
+  id          String        @id @default(cuid())
+  title       String
+  description String        @db.Text
+  price       Decimal       @db.Decimal(12, 2)
+  currency    String        @default("USD")
+  location    String
+  images      String[]
+  status      ProductStatus @default(ACTIVE)
+  views       Int           @default(0)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Relations
+  seller      User          @relation(fields: [sellerId], references: [id], onDelete: Cascade)
+  sellerId    String
+  category    Category      @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  reports     Report[]
+
+  @@index([sellerId])
+  @@index([categoryId])
+  @@index([status])
+  @@index([createdAt])
+  @@map("products")
+}
+
+model Report {
+  id          String       @id @default(cuid())
+  reason      ReportReason
+  description String?
+  status      ReportStatus @default(PENDING)
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  // Relations
+  reporter    User         @relation("ReporterRelation", fields: [reporterId], references: [id], onDelete: Cascade)
+  reporterId  String
+  product     Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId   String
+
+  @@index([reporterId])
+  @@index([productId])
+  @@index([status])
+  @@map("reports")
+}
