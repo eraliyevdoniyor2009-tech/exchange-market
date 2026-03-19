@@ -23,7 +23,7 @@ const securityHeaders = [
   },
 ];
 
-const nextConfig: NextConfig = {
+const nextConfig = { 
   compress: true,
   output: "standalone",
   images: {
