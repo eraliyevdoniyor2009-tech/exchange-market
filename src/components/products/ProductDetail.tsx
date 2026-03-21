@@ -84,7 +84,10 @@ export function ProductDetail({
 }: ProductDetailProps) {
   const isOwner    = currentUserId === product.sellerId;
   const statusInfo = STATUS_STYLES[product.status] ?? STATUS_STYLES.ACTIVE;
-  const catName    = getCategoryName(product.category, locale);
+  const catName = getCategoryName(
+    { ...product.category, isActive: true },
+    locale
+  ); 
   const isSold     = product.status === "SOLD";
 
   return (
