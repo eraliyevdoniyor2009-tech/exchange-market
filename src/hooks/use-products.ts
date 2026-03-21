@@ -65,7 +65,7 @@ export function useProducts(filters: Partial<ProductFilters>): UseProductsReturn
     filters.sortOrder,
     filters.page,
     filters.perPage,
-    filters.sellerId,
+    (filters as any).sellerId,
     tick,
   ]);
 
