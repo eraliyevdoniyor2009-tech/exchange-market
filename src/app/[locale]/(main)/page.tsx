@@ -178,7 +178,10 @@ export default async function HomePage({
             {latestProducts.map((product) => (
               <ProductCard
                 key={product.id}
-                product={product as ProductListItem}
+                product={{
+                  ...product,
+                  price: Number(product.price)
+                }} 
                 locale={typedLocale}
               />
             ))}
