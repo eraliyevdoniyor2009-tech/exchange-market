@@ -175,9 +175,12 @@ export default async function CategoryPage({ params, searchParams }: PageProps) 
                 {products.map((product) => (
                   <ProductCard
                     key={product.id}
-                    product={product as ProductListItem}
+                    product={{
+                      ...product,
+                      price: Number(product.price)
+                    }}
                     locale={typedLocale}
-                  />
+                  /> 
                 ))}
               </div>
 
