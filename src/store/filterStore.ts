@@ -46,6 +46,6 @@ export function buildProductQueryString(filters: Partial<ProductFilters>): strin
   if (filters.sortOrder)    params.set("sortOrder",    filters.sortOrder);
   if (filters.page)         params.set("page",         String(filters.page));
   if (filters.perPage)      params.set("perPage",      String(filters.perPage));
-  if (filters.sellerId)     params.set("sellerId",     filters.sellerId);
+  if ((filters as any).sellerId) params.set("sellerId", (filters as any).sellerId); 
   return params.toString();
 }
