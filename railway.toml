@@ -2,21 +2,8 @@
 # https://docs.railway.app/reference/config-as-code
 
 [build]
-builder = "nixpacks"
-buildCommand = "npm run build"
+builder = "dockerfile"
 
 [deploy]
-startCommand = "npm run db:migrate:prod && node .next/standalone/server.js" 
 restartPolicyType = "on_failure"
-restartPolicyMaxRetries = 3
-
-[healthcheck]
-path = "/api/health"
-timeout = 30
-
-[[services]]
-name = "web"
-
-[services.variables]
-PORT = "3000"
-NODE_ENV = "production"
+restartPolicyMaxRetries = 3 
