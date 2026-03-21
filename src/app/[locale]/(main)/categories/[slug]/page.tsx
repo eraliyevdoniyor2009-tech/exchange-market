@@ -15,6 +15,7 @@ import { CategorySidebar }    from "@/components/categories/CategorySidebar";
 import { Pagination }         from "@/components/shared/Pagination";
 import { getCategoryName }    from "@/types";
 import type { Locale, ProductListItem } from "@/types";
+export const dynamic = "force-dynamic";
 
 interface PageProps {
   params: { locale: string; slug: string };
@@ -26,15 +27,6 @@ interface PageProps {
     maxPrice?: string;
     location?: string;
   };
-}
-
-// ── Static paths ──────────────────────────────────────────────────────────────
-export async function generateStaticParams() {
-  const categories = await getCategories();
-  const locales    = ["en", "uz", "ru"];
-  return locales.flatMap((locale) =>
-    categories.map((cat) => ({ locale, slug: cat.slug }))
-  );
 }
 
 // ── Metadata ──────────────────────────────────────────────────────────────────
