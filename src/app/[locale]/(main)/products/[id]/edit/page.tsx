@@ -58,7 +58,7 @@ export default async function EditProductPage({
           title: product.title,
           description: product.description,
           price: Number(product.price),
-          currency: product.currency,
+          currency: product.currency as "USD" | "UZS" | "RUB", 
           location: product.location,
           images: product.images,
           categoryId: product.categoryId,
