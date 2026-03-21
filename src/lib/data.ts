@@ -202,5 +202,5 @@ export async function getSearchSuggestions(query: string): Promise<string[]> {
     orderBy: { views: "desc" },
   });
 
-  return [...new Set(products.map((p) => p.title))];
+  return Array.from(new Set(products.map((p) => p.title))); 
 }
