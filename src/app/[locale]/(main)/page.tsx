@@ -146,7 +146,10 @@ export default async function HomePage({
               </Link>
             </div>
             <FeaturedProductsCarousel
-              products={featuredProducts as ProductListItem[]}
+              products={featuredProducts.map(product => ({
+                ...product,
+                price: Number(product.price)
+              }))}
               locale={typedLocale}
             />
           </section>
