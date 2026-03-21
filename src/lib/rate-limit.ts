@@ -14,13 +14,15 @@ const store = new Map<string, RateLimitEntry>();
 // Prune stale entries every 5 minutes
 if (typeof setInterval !== "undefined") {
   setInterval(() => {
-    const now = Date.now();
-    Array.from(store.entries()).forEach(([key, entry]) => {
-      if (entry.resetAt < now) store.delete(key);
-    }); 
-      if (entry.resetAt < now) store.delete(key);
+  const now = Date.now();
+
+  Array.from(store.entries()).forEach(([key, entry]) => {
+    if (entry.resetAt < now) {
+      store.delete(key);
     }
-  }, 5 * 60 * 1000);
+  });
+
+}, 5 * 60 * 1000); 
 }
 
 export interface RateLimitConfig {
