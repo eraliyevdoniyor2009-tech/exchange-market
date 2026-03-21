@@ -265,7 +265,7 @@ export function ProductForm({ productId, defaultValues }: ProductFormProps) {
                       key={cur.value}
                       type="button"
                       onClick={() => {
-                        setValue("currency", cur.value, { shouldDirty: true });
+                        setValue("currency", cur.value as "USD" | "UZS" | "RUB", { shouldDirty: true }); 
                         setCurOpen(false);
                       }}
                       className={cn(
