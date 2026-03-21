@@ -6,7 +6,7 @@ builder = "nixpacks"
 buildCommand = "npm run build"
 
 [deploy]
-startCommand = "npm run db:migrate:prod && node .next/standalone/server.js"
+startCommand = "prisma migrate deploy && node .next/standalone/server.js" 
 restartPolicyType = "on_failure"
 restartPolicyMaxRetries = 3
 
