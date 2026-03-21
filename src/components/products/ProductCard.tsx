@@ -14,7 +14,10 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product, locale, className }: ProductCardProps) {
-  const categoryName = getCategoryName(product.category, locale);
+  const categoryName = getCategoryName(
+    { ...product.category, isActive: true },
+    locale
+  ); 
 
   return (
     <Link href={`/${locale}/products/${product.id}`}>
