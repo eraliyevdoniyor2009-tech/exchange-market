@@ -131,7 +131,10 @@ export default async function PublicProfilePage({
               {products.map((product) => (
                 <ProductCard
                   key={product.id}
-                  product={product as ProductListItem}
+                  product={{
+                    ...product,
+                    price: Number(product.price)
+                  }}
                   locale={locale as Locale}
                 />
               ))}
