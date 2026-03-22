@@ -24,6 +24,7 @@ const securityHeaders = [
 ];
 
 const nextConfig = { 
+  output: "standalone",
   compress: true,
   images: {
     formats: ["image/avif", "image/webp"],
