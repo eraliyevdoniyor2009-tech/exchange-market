@@ -1,8 +1,5 @@
 // src/components/home/CategoryGrid.tsx
-"use client";
-
 import Link from "next/link";
-import { useLocale } from "next-intl";
 import {
   Laptop, Car, Home, Shirt, Sofa, Dumbbell,
   BookOpen, Leaf, Baby, Wrench, Tag,
@@ -11,13 +8,11 @@ import { getCategoryName } from "@/types";
 import type { Category, Locale } from "@/types";
 import { cn } from "@/lib/utils";
 
-// Map icon name strings to lucide components
 const ICON_MAP: Record<string, React.ElementType> = {
   Laptop, Car, Home, Shirt, Sofa, Dumbbell,
   BookOpen, Leaf, Baby, Wrench, Tag,
 };
 
-// Distinct color palette — one per category slot
 const COLOR_PALETTE = [
   { bg: "bg-blue-50",   icon: "bg-blue-500",   text: "text-blue-700",   hover: "hover:bg-blue-100"   },
   { bg: "bg-rose-50",   icon: "bg-rose-500",   text: "text-rose-700",   hover: "hover:bg-rose-100"   },
@@ -33,12 +28,11 @@ const COLOR_PALETTE = [
 
 interface CategoryGridProps {
   categories: Category[];
+  locale: Locale;
   showCounts?: boolean;
 }
 
-export function CategoryGrid({ categories, showCounts = true }: CategoryGridProps) {
-  const locale = useLocale() as Locale;
-
+export function CategoryGrid({ categories, locale, showCounts = true }: CategoryGridProps) {
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3">
       {categories.map((cat, i) => {
@@ -59,7 +53,6 @@ export function CategoryGrid({ categories, showCounts = true }: CategoryGridProp
               "hover:border-white hover:shadow-lg"
             )}
           >
-            {/* Icon bubble */}
             <div className={cn(
               "w-12 h-12 rounded-xl flex items-center justify-center shadow-sm",
               "group-hover:scale-110 transition-transform duration-200",
@@ -67,10 +60,22 @@ export function CategoryGrid({ categories, showCounts = true }: CategoryGridProp
             )}>
               <IconCmp className="w-6 h-6 text-white" strokeWidth={1.8} />
             </div>
-
-            {/* Name */}
             <div className="text-center">
               <p className={cn("text-sm font-semibold leading-tight", color.text)}>
+                {name}
+              </p>
+              {showCounts && count > 0 && (
+                <p className="text-xs text-gray-400 mt-0.5">
+                  {count.toLocaleString()} {count === 1 ? "listing" : "listings"}
+                </p>
+              )}
+            </div>
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
                 {name}
               </p>
               {showCounts && count > 0 && (
