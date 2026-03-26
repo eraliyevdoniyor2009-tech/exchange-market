@@ -174,10 +174,7 @@ export async function getSearchSuggestions(query: string): Promise<string[]> {
   });
 
   return [...new Set(products.map((p) => p.title))];
-}
-  ["homepage-data"],
-  { revalidate: 300, tags: [CACHE_TAGS.products] } // 5-min revalidation
-);
+  }
 
 // ─── Category page data ────────────────────────────────────────────────────────
 
