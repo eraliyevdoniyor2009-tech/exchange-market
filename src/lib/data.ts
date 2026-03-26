@@ -175,14 +175,6 @@ export async function getSearchSuggestions(query: string): Promise<string[]> {
 
   return [...new Set(products.map((p) => p.title))];
 }
-      latestProducts,
-      stats: {
-        activeListings: stats[0],
-        totalUsers: stats[1],
-        totalCategories: stats[2],
-      },
-    };
-  },
   ["homepage-data"],
   { revalidate: 300, tags: [CACHE_TAGS.products] } // 5-min revalidation
 );
